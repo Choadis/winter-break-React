@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person'
 import Input from './Input/Input'
+import Valid from './Valid/Valid'
 
 class App extends Component {
   state = {
@@ -11,7 +12,8 @@ class App extends Component {
       { id: '3', name: 'Para', age: 12}
     ],
     show: false,
-    initValue: '0'
+    initValue: '0',
+    validation: "Text too short"
   }
 
   nameChangeHandler = (event, id) => {
@@ -46,8 +48,13 @@ class App extends Component {
     if (event !== undefined) {
       let input = event.target.value
       const inpLength = input.length
-      console.log(inpLength);
       this.setState({ initValue: inpLength })
+      if (this.state.initValue > 4) {
+        console.log("Here");
+        this.setState({validation: "Text too long"})
+      } else {
+        return null;
+      }
     } else {
       return this.state.initValue;
     }
@@ -77,6 +84,9 @@ class App extends Component {
       <h1> React app</h1>
       <Input
       inputHandler={this.inputHandler} />
+      <Valid
+      valid={this.state.validation} />
+
       </div>
     );
   }
