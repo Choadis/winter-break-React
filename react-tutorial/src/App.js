@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person'
+import Input from './Input/Input'
+import Valid from './Valid/Valid'
 
 class App extends Component {
   state = {
@@ -9,7 +11,9 @@ class App extends Component {
       { id: '2', name: 'Ayane', age: 26 },
       { id: '3', name: 'Para', age: 12}
     ],
-    show: false
+    show: false,
+    initValue: '0',
+    validation: "Text too short"
   }
 
   nameChangeHandler = (event, id) => {
@@ -40,13 +44,23 @@ class App extends Component {
     this.setState({people: people})
   }
 
+  inputHandler = (event) => {
+    if (event !== undefined) {
+      let input = event.target.value
+      const inpLength = input.length
+      this.setState({ initValue: inpLength })
+      if (this.state.initValue > 4) {
+        console.log("Here");
+        this.setState({validation: "Text too long"})
+      } else {
+        return null;
+      }
+    } else {
+      return this.state.initValue;
+    }
+  }
+
   render() {
-    const style = {
-      font: 'inherit',
-      border: '3px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
 
     let people = null;
 
@@ -68,12 +82,11 @@ class App extends Component {
     return (
       <div className="App">
       <h1> React app</h1>
-      <button
-      style={style}
-      onClick={this.toggleHandler}
-      >Toggle div
-      </button>
-      {people}
+      <Input
+      inputHandler={this.inputHandler} />
+      <Valid
+      valid={this.state.validation} />
+
       </div>
     );
   }
