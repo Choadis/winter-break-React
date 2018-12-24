@@ -3,6 +3,7 @@ import './App.css';
 import Person from './Person/Person'
 import Input from './Input/Input'
 import Valid from './Valid/Valid'
+import CharComp from './CharComp/CharComp'
 
 class App extends Component {
   state = {
@@ -49,11 +50,11 @@ class App extends Component {
       let input = event.target.value
       const inpLength = input.length
       this.setState({ initValue: inpLength })
-      if (this.state.initValue > 4) {
-        console.log("Here");
+      if (inpLength > 4) {
+        // console.log(this.state.initValue);
         this.setState({validation: "Text too long"})
-      } else {
-        return null;
+      }else {
+        this.setState({validation: "Text too short"})
       }
     } else {
       return this.state.initValue;
@@ -82,10 +83,15 @@ class App extends Component {
     return (
       <div className="App">
       <h1> React app</h1>
+      <button className="button"
+      onClick={this.toggleHandler}>Toggle Persons
+      </button>
       <Input
       inputHandler={this.inputHandler} />
       <Valid
       valid={this.state.validation} />
+      <CharComp />
+      {people}
 
       </div>
     );
